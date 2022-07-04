@@ -1,8 +1,8 @@
-const User = require('../models/user')
-const shortId = require('shortid')
+const User = require('../models/user');
+const shortId = require('shortid');
 
 exports.signup = (req, res) => {
-    User.findOne({email: req.body.email()}).exec((err, user) =>{
+    User.findOne({ email: req.body.email }).exec((err, user) => {
         if(user){
             return res.status(400).json({
                 error: 'Email is taken'
@@ -20,12 +20,12 @@ exports.signup = (req, res) => {
                     error: err
                 })
             }
-            res.json({
-                user: success
-            })
             // res.json({
-            //     message: 'Singup success! Please signin.'
+            //     user: success
             // })
+            res.json({
+                message: 'Singup success! Please signin.'
+            })
         })
     })
 };

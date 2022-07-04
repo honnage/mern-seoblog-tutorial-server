@@ -67,24 +67,27 @@ const userSchema = new mongoose.Schema(
 userSchema
   .virtual("password")
   .set(function (password) {
-    this._password = password; //create a temporarity variable called _password
-    this.salt = this.makeSalt(); // generate salt
-    this.hashed_password = this.encryptPassword(password); //encryptPassword
+    this._password = password; // create a temporarity variable called _password
+    this.salt = this.makeSalt();  // generate salt
+    this.hashed_password = this.encryptPassword(password);  // encryptPassword
   })
   .get(function () {
     return this._password;
   });
 
-userSchema.method = {
+userSchema.methods = {
   authenticate: function (plainText) {
-    return this.encryptPasswordncrt(plainText) === this.hashed_password
+    return this.encryptPassword(plainText) === this.hashed_password;
   },
 
   encryptPassword: function (password) {
     if (!password) return "";
     try {
-      return crypto.createHmac("sh1", this.salt).update(password).digest("hex");
-    } catch (error) {
+      return crypto
+        .createHmac("sha1", this.salt)
+        .update(password)
+        .digest("hex");
+    } catch (err) {
       return "";
     }
   },
