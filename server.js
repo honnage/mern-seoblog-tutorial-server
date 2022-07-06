@@ -21,7 +21,10 @@ mongoose
     //   useCreatendex: true,
     //   useFindAndModify: false,
   })
-  .then(() => console.log("Database connected"));
+  .then(() => console.log("Database connected"))
+  .catch(err => {
+    console.log(err);
+  });
 
 // middlewares
 app.use(morgan("dev"));
