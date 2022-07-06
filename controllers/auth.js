@@ -55,14 +55,14 @@ exports.signin = (req, res) => {
                 error: 'Email and password do not match.'
             });
         }
-        // generate a roken and send to client
+        // generate a token and send to client
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        res.cookie("token", token, { expiresIn: "1d" });
+        res.cookie('token', token, { expiresIn: '1d' });
         const { _id, username, name, email, role } = user;
-        return res.jion({
+        return res.json({
             token,
-            user
+            user: { _id, username, name, email, role }
         });
     });
 };
